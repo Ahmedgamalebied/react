@@ -36,3 +36,102 @@
     ]
   }
 }
+pca.................
+import pandas as pd
+
+data = pd.read_csv('pcadata.csv')
+X = data.drop('outcome', 1)
+y = data['outcome']
+from sklearn.model_selection import train_test_split
+
+x_train, x_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
+
+from sklearn.ensemble import RandomForestClassifier
+
+rf = RandomForestClassifier(n_estimators=10)
+rf.fit(x_train, y_train)
+
+
+
+predictions = rf.predict(x_test)
+
+
+from sklearn.metrics import confusion_matrix
+
+matrix = confusion_matrix(y_test, predictions)
+print(matrix)
+
+
+
+from sklearn.metrics import accuracy_score
+
+acc = accuracy_score(y_test, predictions)
+print("accuracy ", acc)
+
+
+from sklearn.metrics import precision_score
+
+pre = precision_score(y_test, predictions)
+print("precision ", pre)
+
+from sklearn.metrics import recall_score
+
+rec = recall_score(y_test, predictions)
+print("recall  ", rec)
+
+
+from sklearn.metrics import f1_score
+
+f1 = f1_score(y_test, predictions)
+print("f1-measure  ", f1)
+ k field.....................................................
+import pandas as pd
+data=pd.read_csv('diabetics.csv')    #dataframe
+data.shape
+#data.head()
+
+
+x=data.drop('outcome',axis=1)
+y=data['outcome']
+
+
+from sklearn.model_selection import KFold    #KFold Cross Validation
+k=10
+kfold=KFold(n_splits=k,random_state=None,shuffle=False)
+acclist=[]
+
+
+
+linear regresion ................................
+
+columns=['bedrooms','bathrooms','sqft_living','sqft_lot','waterfront','view','condition','grade','sqft_above','sqft_basement','yr_built','yr_renovated','sqft_living15','sqft_lot15']
+x=data[list(columns)].values
+y=data['price'].values
+
+from sklearn.model_selection import train_test_split
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.4)
+print(x_test)
+
+from sklearn.linear_model import LinearRegression
+reg=LinearRegression()
+reg.fit(x_train,y_train)
+print('intercept',reg.intercept_)
+print('cof',reg.coef_)
+y_pred=reg.predict(x_test)
+df=pd.DataFrame({"actual": y_test,"predicted": y_pred})
+print(df)
+
+from sklearn import metrics
+print("mean absolute error: " , metrics.mean_absolute_error(y_test,y_pred))
+print("mean square error: " , metrics.mean_squared_error(y_test,y_pred))
+print("mean sqrt error: " , np.sqrt(metrics.mean_squared_error(y_test,y_pred)))
+
+data.plot(x="bedrooms",y="price",style="o")
+plt.title("bedrooms vs price")
+plt.xlabel("bedrooms")
+plt.ylabel("price")
+plt.plot(x_test,y_pred,color="blue",linewidth=3)
+plt.show()
+
+
+
